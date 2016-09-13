@@ -3,16 +3,22 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 
 public class JobOpening {
+  String mTitle;
   String mDescription;
   Integer mSalary;
   String mContactInfo;
   LocalDate mPostingExpires;
 
-  public JobOpening(String description, Integer salary, String contactInfo, LocalDate postingExpires) {
+  public JobOpening(String title, String description, Integer salary, String contactInfo, LocalDate postingExpires) {
+    mTitle = title;
     mDescription = description;
     mSalary = salary;
     mContactInfo = contactInfo;
     mPostingExpires = postingExpires;
+  }
+
+  public String getTitle() {
+    return mTitle;
   }
 
   public String getDescription() {

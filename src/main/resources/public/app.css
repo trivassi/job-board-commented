@@ -2,6 +2,10 @@ label {
   margin-top: 30px;
 }
 
+ul {
+  list-style: none;
+}
+
 input {
   margin-bottom: 30px;
 }

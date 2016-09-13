@@ -5,9 +5,10 @@
     #foreach ($jobOpening in $jobOpenings)
       #if (!$jobOpening.isPostExpired())
         <li>
+          <h3 class="text-center">$jobOpening.getTitle()</h3>
           <p>$jobOpening.getDescription()</p>
           <p>$jobOpening.getPostingExpires()</p>
-          <p>$jobOpening.getSalary()</p>
+          <p>$ $jobOpening.getSalary()</p>
           <p>$jobOpening.getContactInfo()</p>
         </li>
       #end
@@ -21,6 +22,8 @@
 
 <div class="input-form">
   <form action="/jobOpenings" method="post">
+    <label for="title">Job title</label>
+    <input id="title" name="title" type="text" class="form-control">
     <label for="description">Description of job</label>
     <textarea id="description" name="description" type="text" class="form-control"></textarea>
     <label for="postingExpires">Job expiration</label>

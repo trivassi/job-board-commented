@@ -21,14 +21,16 @@ public class App {
       jobOpenings = new ArrayList<JobOpening>();
       request.session().attribute("jobOpenings", jobOpenings);
     }
+    String title = request.queryParams("title");
     String description = request.queryParams("description");
     Integer salary = Integer.parseInt(request.queryParams("salary"));
     LocalDate postingExpires = stringToLocalDate(request.queryParams("postingExpires"));
     String contactInfo = request.queryParams("contactInfo");
-    JobOpening newJobOpening = new JobOpening (description, salary, contactInfo, postingExpires);
+    JobOpening newJobOpening = new JobOpening (title, description, salary, contactInfo, postingExpires);
     jobOpenings.add(newJobOpening);
 
-    model.put("template", "templates/success.vtl");
+    // model.put("template", "templates/success.vtl");
+    response.redirect("/");
     return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
