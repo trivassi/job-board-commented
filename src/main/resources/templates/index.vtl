@@ -3,12 +3,14 @@
 #if ($jobOpenings)
   <ul>
     #foreach ($jobOpening in $jobOpenings)
-      <li>
-        <p>$jobOpening.getDescription()</p>
-        <p>$jobOpening.getPostingExpires()</p>
-        <p>$jobOpening.getSalary()</p>
-        <p>$jobOpening.getContactInfo()</p>
-      </li>
+      #if (!$jobOpening.isPostExpired())
+        <li>
+          <p>$jobOpening.getDescription()</p>
+          <p>$jobOpening.getPostingExpires()</p>
+          <p>$jobOpening.getSalary()</p>
+          <p>$jobOpening.getContactInfo()</p>
+        </li>
+      #end
     #end
   </ul>
 #else
@@ -20,11 +22,14 @@
 <div class="input-form">
   <form action="/jobOpenings" method="post">
     <label for="description">Description of job</label>
-    <input id="description" name="description" type="text" class="form-control">
+    <textarea id="description" name="description" type="text" class="form-control"></textarea>
     <label for="postingExpires">Job expiration</label>
     <input id="postingExpires" name="postingExpires" type="date" class="form-control">
     <label for="salary">Job salary</label>
-    <input id="salary" name="salary" type="text" class="form-control">
+    <div class="input-group">
+      <div class="input-group-addon">$</div>
+      <input id="salary" name="salary" type="number" class="form-control">
+    </div>
     <label for="contactInfo">Contact info</label>
     <input id="contactInfo" name="contactInfo" type="text"class="form-control">
     <button type="submit" class="btn btn-success">Add job</button>
