@@ -17,15 +17,16 @@
 
 <p>Add a new Job:</p>
 
-<form action="/jobOpenings" method="post">
-  <label for="description">Description of job</label>
-  <input id="description" name="description" type="text">
-  <label for="postingExpires">Job expiration</label>
-  <input id="postingExpires" name="postingExpires" type="date">
-  <label for="salary">Job salary</label>
-  <input id="salary" name="salary" type="text">
-  <label for="contactInfo">Contact info</label>
-  <input id="contactInfo" name="contactInfo" type="text">
-
-  <button type="submit" class="btn btn-default">Add job</button>
-</form>
+<div class="input-form">
+  <form action="/jobOpenings" method="post">
+    <label for="description">Description of job</label>
+    <input id="description" name="description" type="text" class="form-control">
+    <label for="postingExpires">Job expiration</label>
+    <input id="postingExpires" name="postingExpires" type="date" class="form-control">
+    <label for="salary">Job salary</label>
+    <input id="salary" name="salary" type="text" class="form-control">
+    <label for="contactInfo">Contact info</label>
+    <input id="contactInfo" name="contactInfo" type="text"class="form-control">
+    <button type="submit" class="btn btn-success">Add job</button>
+  </form>
+</div>
