@@ -1,0 +1,31 @@
+<div class="header">
+  <h1>Add a job opening to $city.getName()</h1>
+</div>
+
+  <div class="input-form">
+    <form action="/jobopenings" method="post">
+      <input id="cityId" name="cityId" type="hidden" value="$city.getId()">
+      <label for="title">Job title</label>
+      <input id="title" name="title" type="text" class="form-control">
+      <label for="description">Description of job</label>
+      <textarea id="description" name="description" type="text" class="form-control"></textarea>
+      <label for="postingExpires">Job expiration</label>
+      <input id="postingExpires" name="postingExpires" type="date" class="form-control">
+      <label for="salary">Job salary</label>
+      <div class="input-group">
+        <div class="input-group-addon">$</div>
+        <input id="salary" name="salary" type="number" class="form-control">
+      </div>
+      <label for="contactInfo">Contact info</label>
+      <input id="contactInfo" name="contactInfo" type="text"class="form-control">
+      <button type="submit" class="btn btn-success">Add job</button>
+    </form>
+  </div>
+
+  <!-- get("/cities/:id/jobopenings/new", (request, response) -> {
+    Map<String, Object> model = new HashMap<String, Object>();
+    City city = City.find(Integer.parseInt(request.params(":id")));
+    model.put("city", city);
+    model.put("template", "templates/city-jobopenings-form.vtl");
+    return new ModelAndView(model, layout);
+  }, new VelocityTemplateEngine()); -->

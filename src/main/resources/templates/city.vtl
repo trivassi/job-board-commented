@@ -1,0 +1,43 @@
+<div class="header">
+  <h1>$city.getName() jobs:</h1>
+</div>
+
+<ul>
+  #foreach($jobopening in $city.getJobOpenings())
+   <li>
+    <h3>$jobopening.getTitle()</h3>
+    <p>Expires on $jobopening.getPostingExpires() ($jobopening.daysUntilExpired() days)</p>
+    <p>Description: $jobopening.getDescription()</p>
+    <p>Salary: #[[$]]#$jobopening.getSalary()</p>
+    <p>Contact: $jobopening.getContactInfo()</p>
+   </li>
+  #end
+</ul>
+
+<p><a href="/cities/$city.getId()/jobopenings/new">Add a job opening</a></p>
+<p><a href="/cities">All cities</a></p>
+
+<!--
+if you choose add job opening
+
+get("/cities/:id", (request, response) -> {
+  Map<String, Object> model = new HashMap<String, Object>();
+  City city = City.find(Integer.parseInt(request.params(":id")));
+  model.put("city", city);
+  model.put("template", "templates/city.vtl");
+  return new ModelAndView(model, layout);
+}, new VelocityTemplateEngine());
+
+getting info from the city ID and putting it on page
+-->
+
+<!-- if you choose view all cities:
+
+get("/cities", (request, response) -> {
+  Map<String, Object> model = new HashMap<String, Object>();
+  model.put("cities", City.all());
+  model.put("template", "templates/cities.vtl");
+  return new ModelAndView(model, layout);
+}, new VelocityTemplateEngine());
+
+-->

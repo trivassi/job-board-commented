@@ -1,0 +1,18 @@
+<div class="header">
+  <h1>Add a city</h1>
+</div>
+
+<p>Add a city here:</p>
+
+<form action="/cities" method="post">
+  <!-- posting to /cities -->
+  <label for="name">City name</label>
+  <input id="name" name="name" type="text">
+  <button type="submit" class="btn btn-success">Add city</button>
+</form>
+
+<!-- get("/cities/new", (request, response) -> {
+  Map<String, Object> model = new HashMap<String, Object>();
+  model.put("template", "templates/city-form.vtl");
+  return new ModelAndView(model, layout);
+}, new VelocityTemplateEngine()); -->

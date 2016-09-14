@@ -1,40 +1,20 @@
-<h1>Job Board</h1>
-
-#if ($jobOpenings)
-  <ul>
-    #foreach ($jobOpening in $jobOpenings)
-      #if (!$jobOpening.isPostExpired())
-        <li>
-          <h3 class="text-center">$jobOpening.getTitle()</h3>
-          <p>$jobOpening.getDescription()</p>
-          <p>$jobOpening.getPostingExpires()</p>
-          <p>$ $jobOpening.getSalary()</p>
-          <p>$jobOpening.getContactInfo()</p>
-        </li>
-      #end
-    #end
-  </ul>
-#else
-  <p>No jobs!</p>
-#end
-
-<p>Add a new Job:</p>
-
-<div class="input-form">
-  <form action="/jobOpenings" method="post">
-    <label for="title">Job title</label>
-    <input id="title" name="title" type="text" class="form-control">
-    <label for="description">Description of job</label>
-    <textarea id="description" name="description" type="text" class="form-control"></textarea>
-    <label for="postingExpires">Job expiration</label>
-    <input id="postingExpires" name="postingExpires" type="date" class="form-control">
-    <label for="salary">Job salary</label>
-    <div class="input-group">
-      <div class="input-group-addon">$</div>
-      <input id="salary" name="salary" type="number" class="form-control">
-    </div>
-    <label for="contactInfo">Contact info</label>
-    <input id="contactInfo" name="contactInfo" type="text"class="form-control">
-    <button type="submit" class="btn btn-success">Add job</button>
-  </form>
+<div class="header">
+  <h1>Job board!</h1>
 </div>
+
+<div class="container">
+  <p><a href="/cities/new">Add a New City</a></p>
+  #if ($cities.size() > 0)
+  <!-- check for arry of cities -->
+  <p><a href="/cities">View City List</a></p>
+  #end
+</div>
+
+<!-- get("/", (request, response) -> {
+  Map<String, Object> model = new HashMap<String, Object>();
+  model.put("cities", City.all());
+  getting all cities and putting them in the model
+  vtl only has access to whatever is in the model
+  model.put("template", "templates/index.vtl");
+  return new ModelAndView(model, layout);
+}, new VelocityTemplateEngine()); -->

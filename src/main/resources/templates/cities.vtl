@@ -1,0 +1,20 @@
+<div class="">
+  <h1>All Cities</h1>
+</div>
+<ul>
+  #foreach ($city in $cities)
+    <li><p><a href="/cities/$city.getId()">$city.getName()</a></p></li>
+  #end
+</ul>
+<p><a href="/cities/new">Add New City</a></p>
+
+<!--
+if you choose add new city
+
+post("/cities", (request, response) -> {
+  Map<String, Object> model = new HashMap<String, Object>();
+  String name = request.queryParams("name");
+  City newCity = new City(name);
+  response.redirect("/cities/" + newCity.getId());
+  return new ModelAndView(model, layout);
+}, new VelocityTemplateEngine()); -->

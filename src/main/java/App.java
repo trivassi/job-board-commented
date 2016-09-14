@@ -5,42 +5,77 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
 
 public class App {
   public static void main(String[] args) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
-    post("/jobOpenings", (request, response) ->{
-      Map<String, Object> model = new HashMap<String, Object>();
-
-      ArrayList<JobOpening> jobOpenings = request.session().attribute("jobOpenings");
-    if (jobOpenings == null) {
-      jobOpenings = new ArrayList<JobOpening>();
-      request.session().attribute("jobOpenings", jobOpenings);
-    }
-    String title = request.queryParams("title");
-    String description = request.queryParams("description");
-    Integer salary = Integer.parseInt(request.queryParams("salary"));
-    LocalDate postingExpires = stringToLocalDate(request.queryParams("postingExpires"));
-    String contactInfo = request.queryParams("contactInfo");
-    JobOpening newJobOpening = new JobOpening (title, description, salary, contactInfo, postingExpires);
-    jobOpenings.add(newJobOpening);
-
-    // model.put("template", "templates/success.vtl");
-    response.redirect("/");
-    return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
     get("/", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("jobOpenings", request.session().attribute("jobOpenings"));
+      model.put("cities", City.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    get("/cities/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/city-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/cities/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      City city = City.find(Integer.parseInt(request.params(":id")));
+      model.put("city", city);
+      model.put("template", "templates/city.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/cities/:id/jobopenings/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      City city = City.find(Integer.parseInt(request.params(":id")));
+      model.put("city", city);
+      model.put("template", "templates/city-jobopenings-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/jobopenings", (request, response) ->{
+      Map<String, Object> model = new HashMap<String, Object>();
+      Integer cityId = Integer.parseInt(request.queryParams("cityId"));
+      City city = City.find(cityId);
+
+      String title = request.queryParams("title");
+      String description = request.queryParams("description");
+      Integer salary = Integer.parseInt(request.queryParams("salary"));
+      LocalDate postingExpires = stringToLocalDate(request.queryParams("postingExpires"));
+      String contactInfo = request.queryParams("contactInfo");
+      JobOpening newJobOpening = new JobOpening (title, description, salary, contactInfo, postingExpires);
+      city.addJobOpening(newJobOpening);
+      model.put("city", city);
+      response.redirect("/cities/" + cityId);
+      //same as doing:
+      //      Integer cityId = Integer.parseInt(request.queryParams("cityId")) and then "/:id"
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/cities", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("name");
+      City newCity = new City(name);
+      response.redirect("/cities/" + newCity.getId());
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/cities", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("cities", City.all());
+      model.put("template", "templates/cities.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
   }
+
   public static LocalDate stringToLocalDate(String dateIn) {
     String[] dateToConvert = dateIn.split("-");
     Integer[] newDate = new Integer[3];

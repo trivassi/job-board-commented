@@ -14,7 +14,7 @@ input {
   height: 100vh;
 }
 
-.btn {
+.input-form .btn {
   margin-top: 20px;
 }
 
@@ -25,4 +25,17 @@ input {
 .result{
   text-align: center;
   margin-top: 45vh;
+}
+
+.header {
+  font-family: monospace;
+  background: black;
+  color: white;
+  min-height: 60px;
+  padding-left: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  padding: 20px;
 }
